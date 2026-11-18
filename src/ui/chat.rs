@@ -102,7 +102,7 @@ impl Shell {
         let bot = chat.bot.and_then(|id| self.workspace.bot(id));
         let (mascot, color, name, presence, id) = match bot {
             Some(b) => (b.mascot, theme.identity(b.color), b.name.to_string(), b.presence, b.id as usize),
-            None => (crate::model::MascotShape::Sparkle, theme.accent, "Grok Bot".to_string(), crate::model::Presence::Resting, 0),
+            None => (crate::model::MascotShape::Sparkle, theme.accent, "Aucteris UI".to_string(), crate::model::Presence::Resting, 0),
         };
 
         div()

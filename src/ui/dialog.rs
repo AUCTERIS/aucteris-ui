@@ -779,7 +779,7 @@ impl Shell {
             .child(self.labelled(
                 theme,
                 "Mascot Shape",
-                Some("Choose from the 26 expressive Grok Bot avatars"),
+                Some("Choose from 26 expressive agent silhouettes"),
                 div()
                     .flex()
                     .flex_wrap()
@@ -811,7 +811,7 @@ impl Shell {
                     )
                     .into_any_element(),
             ))
-            // Grok Bot's create flow starts with the model and work context.
+            // The create flow starts with the model and work context.
             // Keep identity fields available at the end so the first viewport
             // follows the reference while names and roles remain editable.
             .child(

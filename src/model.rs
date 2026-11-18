@@ -48,7 +48,7 @@ impl Computer {
     }
 }
 
-/// The 26 expressive mascot shapes from Grok Bot.
+/// The 26 expressive mascot silhouettes available to agents.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum MascotShape {
     Arch,
@@ -191,7 +191,7 @@ pub struct Bot {
     pub role: SharedString,
     /// Slot in the identity palette.
     pub color: usize,
-    /// The bot's expressive shape from Grok Bot.
+    /// The bot's expressive mascot silhouette.
     pub mascot: MascotShape,
     pub model: SharedString,
     pub presence: Presence,
@@ -210,7 +210,7 @@ pub struct Bot {
 #[derive(Debug, Clone)]
 pub enum Part {
     Text(String),
-    /// Collapsible reasoning / thought process block (like Grok / Cursor reasoning mode).
+    /// Collapsible reasoning / thought process block.
     Thought {
         text: String,
         collapsed: bool,
@@ -451,7 +451,7 @@ pub fn seed() -> Workspace {
             role: "Product".into(),
             color: 4,
             mascot: MascotShape::Blob,
-            model: "Grok 3 (Thinking)".into(),
+            model: "Claude Sonnet 4.6".into(),
             presence: Presence::Resting,
             activity: "Launch updates are ready".into(),
             computer: Computer::CloudDesktop,
@@ -467,7 +467,7 @@ pub fn seed() -> Workspace {
             role: "Inbox".into(),
             color: 6,
             mascot: MascotShape::Bean,
-            model: "Grok 3 DeepSearch".into(),
+            model: "GPT-5.2".into(),
             presence: Presence::Working,
             activity: "Reading 4 sources on pricing".into(),
             computer: Computer::ThisComputer,
@@ -483,7 +483,7 @@ pub fn seed() -> Workspace {
             role: "Marketing".into(),
             color: 6,
             mascot: MascotShape::Capsule,
-            model: "Grok 3 Mini".into(),
+            model: "Qwen3.6 32B (local)".into(),
             presence: Presence::Resting,
             activity: "Drafted the launch post".into(),
             computer: Computer::ThisComputer,
@@ -499,7 +499,7 @@ pub fn seed() -> Workspace {
             role: "People".into(),
             color: 5,
             mascot: MascotShape::Blob,
-            model: "Grok 4.1".into(),
+            model: "Claude Opus 4.6".into(),
             presence: Presence::Waiting,
             activity: "3 intros drafted in your voice, ready to review".into(),
             computer: Computer::CloudDesktop,
@@ -515,7 +515,7 @@ pub fn seed() -> Workspace {
             role: "Finance".into(),
             color: 1,
             mascot: MascotShape::Blob,
-            model: "Grok Vision".into(),
+            model: "Qwen3.6 32B (local)".into(),
             presence: Presence::Resting,
             activity: "Report filed. 9 receipts, nothing missing".into(),
             computer: Computer::ThisComputer,
@@ -531,7 +531,7 @@ pub fn seed() -> Workspace {
             role: "Operations".into(),
             color: 3,
             mascot: MascotShape::Blob,
-            model: "Grok 4.1".into(),
+            model: "Claude Sonnet 4.6".into(),
             presence: Presence::Resting,
             activity: "Rescheduled your flight to Friday".into(),
             computer: Computer::ThisComputer,

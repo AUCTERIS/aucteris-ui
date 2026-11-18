@@ -485,6 +485,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "aucteris-ui"
+version = "0.1.0"
+dependencies = [
+ "gpui",
+ "gpui_platform",
+ "image",
+ "unicode-segmentation",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -692,16 +702,6 @@ name = "bumpalo"
 version = "3.20.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "87a0cf66fd1eb2fb7b822cb78370d82303750809bc6ba855f3f58e517d3238db"
-
-[[package]]
-name = "burrow"
-version = "0.1.0"
-dependencies = [
- "gpui",
- "gpui_platform",
- "image",
- "unicode-segmentation",
-]
 
 [[package]]
 name = "bytemuck"

@@ -234,8 +234,8 @@ impl Theme {
 }
 
 fn identity_palette(dark: bool) -> [Hsla; 8] {
-    // Grok Bot's mascot palette: red, orange, yellow, green, cyan, blue,
-    // violet and magenta. Keep the original colors in both appearances.
+    // Aucteris agent identity palette: warm red, orange and yellow alongside
+    // green, cyan, blue, violet and magenta. Keep colors stable across skins.
     let _ = dark;
     [
         hsla(0.98310, 1.0, 0.57451, 1.0),

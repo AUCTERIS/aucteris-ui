@@ -43,7 +43,7 @@ pub struct Shell {
     /// The line the status strip shows while a run is live.
     pub(crate) status: Option<SharedString>,
     focus_pending: bool,
-    /// Whether the Grok Bot Voice Call HUD is active.
+    /// Whether the voice-call HUD is active.
     pub(crate) voice_call_active: bool,
 }
 

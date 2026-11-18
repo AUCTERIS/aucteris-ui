@@ -21,7 +21,7 @@ pub fn icon(glyph: &'static str, size: f32, color: Hsla) -> AnyElement {
         .into_any_element()
 }
 
-/// A bot's Grok mascot mark: the original shape mask tinted with the bot's color.
+/// An agent mascot mark tinted with the agent's configured color.
 pub fn mascot(
     shape: MascotShape,
     color: Hsla,
@@ -41,7 +41,7 @@ pub fn mascot(
             .flex_shrink_0()
             .size(px(size))
             .with_animations(
-                ("grok-mascot", id),
+                ("agent-mascot", id),
                 animations,
                 move |element, index, _| {
                     let frame = frames[index].0;
@@ -84,8 +84,8 @@ fn hsla_to_rgb(color: Hsla) -> [u8; 3] {
     [r, g, b].map(|channel| ((channel + m).clamp(0.0, 1.0) * 255.0).round() as u8)
 }
 
-/// The Grok face strip has 29 poses: a long rest, a short blink, and three
-/// possible small glances. Frame holds match Grok's transition timings.
+/// The face strip has 29 poses: a long rest, a short blink, and three possible
+/// small glances, played with calm holds between expressions.
 fn mascot_motion_frames(id: usize) -> Vec<(u32, u64)> {
     let rest = 2_600 + (id as u64 % 5) * 170;
     let mut frames = vec![(0, rest)];

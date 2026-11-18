@@ -1,116 +1,95 @@
-# Grok Bot
+# Aucteris UI
 
-A calm desktop home for a team of AI bots: each one has its own model, its own
-working folder, its own computer and its own conversation. You talk to them like
-contacts, watch them work, and take back anything you did not want.
+**A focused desktop workspace for a team of AI agents.** Give each agent a role,
+a model profile and a working context; keep conversations, teams and agent
+details together in one quiet, considered interface.
 
-The desktop interface is a Rust/GPUI recreation guided by the supplied Grok Bot
-screenshots and the extracted `grok` reference tree. Bot mascots use the
-original Grok Bot transparent PNG shape masks, tinted with Grok's identity
-palette and embedded in the app.
+Aucteris UI is a native Rust application built with GPUI. Its visual direction
+centres on a compact agent sidebar, a spacious conversation canvas and a
+separate rounded details panel. Midnight and Daylight themes share the same
+clear hierarchy, restrained surfaces and expressive agent identities.
 
-## Run it
+> **Prototype status:** this build is an interactive UI prototype. The chat
+> engine is local and scripted; it does not call an AI provider, run tools or
+> send data over the network. Model names and conversation content are sample
+> data.
 
-```bash
+## Run locally
+
+```sh
 cargo run
 ```
 
-The first build compiles gpui and its renderer, which takes a while on a cold
-`target/`; every run after that is quick.
+The first build compiles GPUI and its renderer. A Rust toolchain with Edition
+2024 support and the Linux graphics dependencies required by GPUI are needed.
 
-The window opens with the Launch Bot conversation selected.
+The app opens the Launch Bot conversation. Try sending a message to see the
+scripted response and agent activity play through the interface.
 
-| Key | Does |
+## Interface
+
+- **Agents:** create, edit, search and switch between role-based agents.
+- **Rooms:** group agents into teams and open a shared conversation.
+- **Conversation:** inspect messages, activity, approvals and the composer in a
+  centred reading column.
+- **Agent details:** open the right-hand panel for model, work location, folder,
+  instructions, connected apps, schedule and appearance.
+- **Appearance:** switch between Midnight and Daylight; choose Simple or
+  Advanced detail in Settings.
+
+### Keyboard shortcuts
+
+| Shortcut | Action |
 | --- | --- |
-| `Enter` | Send |
-| `Shift+Enter` | New line in the composer (kept, not sent) |
+| `Enter` | Send a message |
+| `Shift+Enter` | Add a line in the composer |
 | `Ctrl+J` | Switch Midnight / Daylight |
-| `Ctrl+I` | Show or hide the bot panel |
-| `Ctrl+N` | New bot (opens the form) |
-| `Ctrl+F` | Search the sidebar |
-| `Esc` | Close a dialog, or clear what you typed |
+| `Ctrl+I` | Show or hide agent details |
+| `Ctrl+N` | Create an agent |
+| `Ctrl+F` | Search agents and rooms |
+| `Esc` | Close a dialog or clear the search field |
 
-In the new-bot form: `Tab` moves between fields, `Enter` creates, `Esc` closes.
-The sidebar's gear opens Settings.
+In the create-agent form, `Tab` moves between fields, `Enter` creates the agent
+and `Esc` closes the form.
 
-## Creating a bot
+## What works in this prototype
 
-The `+` in the sidebar (or `Ctrl+N`) opens a real form, not a prompt: name, role,
-model, computer, working folder, instructions and the colour of its mark. Nothing
-is created until Create, and the button stays disabled until the bot has a name.
-The bot's first message describes the setup it just received, so the chat starts
-with the facts rather than the person's guesses.
+Navigation, search, message composition, scripted streaming, stop and undo,
+agent creation and editing, room membership, settings, the details panel, usage
+indicators and both themes are wired to application state. The scripted engine
+in `src/engine.rs` produces the same `Action` sequence a future live engine can
+consume, keeping the interface separate from its eventual provider integration.
 
-## Editing a bot
+## Project structure
 
-The pencil in the bot panel's header reopens the same form on that bot, filled in
-with what it is now. Saving writes the fields back in place: the sidebar row, the
-chat title, the composer's placeholder and the panel all follow the new name, and
-the mark takes the new colour. Nothing is appended to the transcript — an edit is
-not an event the bot needs to narrate.
-
-## Settings
-
-Settings are app-wide; a single bot's settings live in its own panel. Each page
-changes something real, immediately:
-
-- **General** — skin (Midnight / Daylight) and interface mode.
-- **Behaviour** — the model a new bot starts on, and whether `Enter` sends or
-  starts a new line (`Ctrl+Enter` then sends).
-- **Shortcuts** — the keyboard map, as reference.
-- **About** — version, the fact that the engine is simulated, and the provenance
-  note.
-
-**Simple** (the default) keeps token counts, usage meters and inspector rows out
-of the way. **Advanced** adds them back: the team usage meter in the sidebar and
-the Usage section in the bot panel. Switching never loses anything — it is the
-same rows, shown or hidden.
-
-## What is real, what is simulated
-
-The shell is fully wired: selection, search, composer input, streaming, stop,
-undo, copy, the new-bot form, every settings page, the bot panel rows, the usage
-meters and both skins all change real state.
-
-The **engine is simulated** (`src/engine.rs`). A prompt is turned into a scripted
-run — intents, tool steps, file edits, out-of-chat changes — played back with the
-pacing a live model would produce. Nothing leaves the machine and no API key is
-needed. Swapping in a real engine means producing the same `Vec<Action>`; no view
-code needs to change.
-
-## Layout
-
-```
+```text
 src/
-  main.rs        boot: assets, font choice, skin, window
-  theme.rs       tokens (two skins), layout metrics, type scale
-  model.rs       bots, chats, messages, seeded team
-  engine.rs      the simulated agent: prompts -> action scripts
-  assets.rs      embedded icon set (SVG masks)
+  main.rs        application startup and window configuration
+  model.rs       agents, rooms, messages and sample workspace
+  engine.rs      local scripted conversation engine
+  theme.rs       Midnight / Daylight design tokens and layout metrics
+  assets.rs      embedded icons and mascot rendering
   ui/
-    shell.rs     the three places, run lifecycle, keys
-    sidebar.rs   team + rooms
-    chat.rs      header, transcript, status strip
-    composer.rs  the plate you type into
-    bot_panel.rs everything about one bot
-    dialog.rs    new-bot form + settings
-    widgets.rs   shared components
+    shell.rs     application layout and interaction lifecycle
+    sidebar.rs   agent and room navigation
+    chat.rs      conversation, transcript and status
+    composer.rs  message input and send controls
+    bot_panel.rs agent and room details
+    dialog.rs    agent form and settings
+    widgets.rs   shared visual components
 ```
 
-## Design rules the code follows
+## Design principles
 
-- **Three ink levels, one accent.** Hierarchy comes from ink and size, never from
-  a fourth grey or a decorative color.
-- **Bot colors belong to bots.** `identity-*` in the token set is only used for a
-  bot's own mark and name.
-- **One status mark per row.** No count badges, no "needs you" summaries.
-- **Every state is designed.** Empty, working, stopped, undone, no matches,
-  narrow window, both skins.
-- **Motion explains, it never decorates.** Only the live run animates, and the
-  streaming caret is static on purpose.
+- Put the conversation first; keep navigation and details close at hand.
+- Use spacing, type and surface contrast to establish hierarchy.
+- Give every agent a distinct, configurable color and mascot silhouette.
+- Make controls interactive and keep settings changes immediately visible.
+- Use motion to communicate live activity, with restrained ambient animation.
 
-## Provenance
+## Asset attribution
 
-The interface structure, mascot shape assets and color palette follow the
-reference screenshot and extracted Grok Bot source assets. The conversation
-engine remains simulated and local, as described above.
+The current mascot silhouettes and several connector icons are adapted from
+assets extracted from the Grok Bot desktop application for this prototype.
+They are not original Aucteris artwork. Review and replace these assets with
+properly licensed Aucteris artwork before distributing the application.

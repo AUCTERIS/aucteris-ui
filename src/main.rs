@@ -1,4 +1,4 @@
-//! Grok Bot — a desktop home for a team of AI bots.
+//! Aucteris UI — a desktop workspace for a team of AI agents.
 //!
 //! Rust-native desktop interface with a local simulated agent engine.
 
@@ -59,11 +59,11 @@ fn main() {
                     window_bounds: Some(WindowBounds::Windowed(bounds)),
                     window_min_size: Some(size(px(900.0), px(560.0))),
                     titlebar: Some(gpui::TitlebarOptions {
-                        title: Some("Grok Bot".into()),
+                        title: Some("Aucteris UI".into()),
                         appears_transparent: false,
                         ..Default::default()
                     }),
-                    app_id: Some("burrow".into()),
+                    app_id: Some("aucteris-ui".into()),
                     ..Default::default()
                 },
                 |window, cx| {
@@ -78,7 +78,7 @@ fn main() {
                     cx.new(|cx| Shell::new(appearance, cx))
                 },
             )
-            .expect("failed to open the Grok Bot window");
+            .expect("failed to open the Aucteris UI window");
             cx.activate(true);
         });
 }

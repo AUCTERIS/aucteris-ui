@@ -1,8 +1,8 @@
 [package]
-name = "burrow"
+name = "aucteris-ui"
 version = "0.1.0"
 edition = "2024"
-description = "A calm desktop home for a team of AI bots"
+description = "A native desktop workspace for a team of AI agents"
 publish = false
 
 [dependencies]
