@@ -1,0 +1,26 @@
+[package]
+name = "burrow"
+version = "0.1.0"
+edition = "2024"
+description = "A calm desktop home for a team of AI bots"
+publish = false
+
+[dependencies]
+# Same gpui fork + pinned rev as komet (jomvick/zed), so the UI runs on the
+# exact same rendering stack. Nothing from komet's crates is linked in: this
+# app only takes the stack, not the code.
+gpui = { git = "https://github.com/jomvick/zed", rev = "e2ddcc6805f8c5088e62a60dfe517abcccd61a9a" }
+gpui_platform = { git = "https://github.com/jomvick/zed", rev = "e2ddcc6805f8c5088e62a60dfe517abcccd61a9a", features = [
+    "wayland",
+    "x11",
+    "font-kit",
+    "runtime_shaders",
+] }
+unicode-segmentation = "1.12"
+image = { version = "0.25.10", default-features = false, features = ["png"] }
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 2
